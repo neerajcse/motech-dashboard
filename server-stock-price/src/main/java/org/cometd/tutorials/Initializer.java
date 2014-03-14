@@ -9,29 +9,19 @@ import javax.servlet.UnavailableException;
 
 public class Initializer extends GenericServlet
 {
-    private StockPriceEmitter emitter;
+    private AMQConsumer emitter;
 
     @Override
     public void init() throws ServletException
     {
         // Create the emitter
-        emitter = new StockPriceEmitter();
+        emitter = new AMQConsumer();
 
         // Retrieve the CometD service instantiated by AnnotationCometdServlet
         StockPriceService service = (StockPriceService)getServletContext().getAttribute(StockPriceService.class.getName());
 
         // Register the service as a listener of the emitter
-        emitter.getListeners().add(service);
-
-        // Start the emitter
-        emitter.start();
-    }
-
-    @Override
-    public void destroy()
-    {
-        // Stop the emitter
-        emitter.stop();
+        emitter.addListener(service);
     }
 
     @Override

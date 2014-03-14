@@ -41,7 +41,7 @@ public class StockPriceService implements StockPriceEmitter.Listener
             // Convert the Update business object to a CometD-friendly format
             Map<String, Object> data = new HashMap<String, Object>(4);
             data.put("symbol", update.getSymbol());
-            data.put("oldValue", update.getOldValue());
+            //data.put("oldValue", update.getOldValue());
             data.put("newValue", update.getNewValue());
 
             // Publish to all subscribers

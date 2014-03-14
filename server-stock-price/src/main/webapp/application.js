@@ -25,6 +25,7 @@ function(cometd, dom, doc)
                     symbolDiv = doc.place('<div id="' + id + '"></div>', dom.byId('stocks'));
                 }
                 symbolDiv.innerHTML = '<span>' + symbol + ': ' + value + '</span>';
+                dom.byId(symbol).set("value", value);
             });
         }
         else
