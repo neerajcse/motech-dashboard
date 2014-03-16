@@ -16,16 +16,10 @@ function(cometd, dom, doc)
                 var data = message.data;
                 var symbol = data.symbol;
                 var value = data.newValue;
-
-                // Find the div for the given stock symbol
-                var id = 'stock_' + symbol;
-                var symbolDiv = dom.byId(id);
-                if (!symbolDiv)
-                {
-                    symbolDiv = doc.place('<div id="' + id + '"></div>', dom.byId('stocks'));
-                }
-                symbolDiv.innerHTML = '<span>' + symbol + ': ' + value + '</span>';
-                dom.byId(symbol).set("value", value);
+                
+                window.data[symbol] = value;
+                angular.element(document.getElementById(symbol)).scope().$apply(function(scope) { scope.data = window.data });
+                updateChart(symbol, value);
             });
         }
         else
